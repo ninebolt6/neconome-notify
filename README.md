@@ -5,6 +5,15 @@
 ### ファイル構成
 neconome-notify.py - メインスクリプト
 
+### 動作要件
+Python 3.9.6で動作を確認。
+
+使用ライブラリ
+
+- [beautifulsoup4 4.9.3](https://pypi.org/project/beautifulsoup4/)
+- [plyer 2.0.0](https://pypi.org/project/plyer/)
+- [requests 2.26.0](https://pypi.org/project/requests/)
+
 ### スクリプト詳細
 実行の流れは以下の通りです。
 
