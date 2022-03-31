@@ -1,3 +1,5 @@
+import util
+
 import requests
 import time
 import datetime
@@ -10,17 +12,18 @@ from plyer import notification
 INDEX = 1
 
 # 何番前になったら通知するか設定する
-ALERT_NUM = 6
+ALERT_NUMBER = 6
 
 # 何秒おきに確認するか設定する
 DURATION = 180
+
 # 順番待ち情報を取得するURLを指定する
 URL = "https://www.neconome.com/XXXXXXXXXXXXXXX"
 
 
 # 整理券番号を入力
 print("あなたの整理券番号を入力してください")
-target = int(input())
+waiting_num = util.to_hankaku(input())
 
 while 1:
   # 施設の混雑情報を取得
@@ -29,22 +32,20 @@ while 1:
 
   # 順番待ち情報が入っているspanを取得
   span_list = soup.find_all("span", class_="strong")
-  
-  current = span_list[INDEX].text
+  span_text = util.to_hankaku(span_list[INDEX].text)
+  current_num = util.extract_number(span_text)
 
   # 表示
-  now = datetime.datetime.now()
-  print("[{0:%Y年%m月%d日 %H時%M分%S秒}現在]".format(now))
-  print("あなたの番号:", str(target) + "番")
-  print("現在の呼出番号:", current)
+  time_now = datetime.datetime.now()
+  print("[{0:%Y年%m月%d日 %H時%M分%S秒}現在]".format(time_now))
+  print("あなたの番号:", waiting_num + "番")
+  print("現在の呼出番号:", current_num + "番")
   print("")
 
+  # 順番待ちの検証
+  alert_num = str(int(waiting_num) - ALERT_NUMBER)
 
-  label = str(target) + "番"
-  alert_label = str(target - ALERT_NUM) + "番"
-  alert_msg = "!!!! " + str(ALERT_NUM) + "番前になりました。移動を開始してください !!!!"
-
-  if label < current:
+  if waiting_num < current_num :
     print("順番超過 終了します\n")
     notification.notify(
       title="ネコの目通知",
@@ -52,11 +53,11 @@ while 1:
       timeout=5,
     )
     break
-  elif alert_label <= current :
-    print(alert_msg + "\n")
+  elif alert_num <= current_num :
+    print("!!!! " + str(ALERT_NUMBER) + "番前になりました。移動を開始してください !!!!" + "\n")
     notification.notify(
       title="ネコの目通知",
-      message=str(ALERT_NUM) + "番前になりました。移動を開始してください。",
+      message=str(ALERT_NUMBER) + "番前になりました。移動を開始してください。",
       timeout=5,
     )
 

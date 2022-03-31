@@ -3,7 +3,8 @@
 [ネコの目](https://www.neconome.com/)の順番待ち情報を一定時間おきに取得し、順番が近づいたときにデスクトップ通知をしてくれるCUIアプリケーションです。
 
 ### ファイル構成
-neconome-notify.py - メインスクリプト
+neconome-notify.py - メインモジュール
+util.py - 汎用的な処理をまとめたモジュール
 
 ### 動作要件
 Python 3.10.2で動作を確認。
