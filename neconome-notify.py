@@ -6,9 +6,12 @@ from plyer import notification
 
 # 何番目のspanを取得するか指定する。
 # 施設によって文言が違うため、適宜調整する。
+# zero-based index
 INDEX = 1
+
 # 何番前になったら通知するか設定する
 ALERT_NUM = 6
+
 # 何秒おきに確認するか設定する
 DURATION = 180
 # 順番待ち情報を取得するURLを指定する
@@ -25,7 +28,8 @@ while 1:
   soup = BeautifulSoup(html.content, "html.parser")
 
   # 順番待ち情報が入っているspanを取得
-  span_list = soup.find_all("span")
+  span_list = soup.find_all("span", class_="strong")
+  
   current = span_list[INDEX].text
 
   # 表示
@@ -33,6 +37,8 @@ while 1:
   print("[{0:%Y年%m月%d日 %H時%M分%S秒}現在]".format(now))
   print("あなたの番号:", str(target) + "番")
   print("現在の呼出番号:", current)
+  print("")
+
 
   label = str(target) + "番"
   alert_label = str(target - ALERT_NUM) + "番"
