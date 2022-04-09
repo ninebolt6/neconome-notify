@@ -4,7 +4,10 @@
 
 ### ファイル構成
 neconome-notify.py - メインモジュール
+
 util.py - 汎用的な処理をまとめたモジュール
+
+test_util.py - util.pyのテストが書かれたモジュール
 
 ### 動作要件
 Python 3.10.2で動作を確認。
