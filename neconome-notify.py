@@ -67,9 +67,9 @@ while 1:
 
     if current_num.isdigit():
     # 順番待ちの検証
-      alert_num = str(int(waiting_num) - ALERT_NUMBER)
+      alert_num = int(waiting_num) - ALERT_NUMBER
 
-      if waiting_num < current_num:
+      if int(waiting_num) < int(current_num):
         print("順番超過 終了します\n")
         notification.notify(
           title="ネコの目通知",
@@ -77,7 +77,7 @@ while 1:
           timeout=5,
         )
         break
-      elif alert_num <= current_num:
+      elif alert_num <= int(current_num):
         print("!!!! " + str(ALERT_NUMBER) + "番前になりました。移動を開始してください !!!!" + "\n")
         notification.notify(
           title="ネコの目通知",
