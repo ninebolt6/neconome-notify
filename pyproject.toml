@@ -1,0 +1,25 @@
+[project]
+name = "neconome-notify"
+version = "0.1.0"
+description = "Waiting notifier for Neconome"
+dependencies = [
+    "beautifulsoup4>=4.12.2",
+    "plyer>=2.1.0",
+    "requests>=2.31.0",
+]
+readme = "README.md"
+requires-python = ">= 3.11"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = []
+
+[tool.rye.scripts]
+notify = "python src/neconome-notify.py"
+
+[tool.hatch.metadata]
+allow-direct-references = true
