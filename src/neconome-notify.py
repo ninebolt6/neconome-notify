@@ -32,7 +32,7 @@ while 1:
 
         if req.status_code != requests.codes.ok:
             print("ページが取得できませんでした。URLをご確認ください。")
-            print(str(req.status_code) + ": " + str(URL))
+            print(f"{str(req.status_code)}: {str(URL)}")
             break
 
         soup = BeautifulSoup(req.content, "html.parser")
@@ -42,33 +42,27 @@ while 1:
         span_list = soup.find_all("span", class_="strong")
 
         if len(span_list) == 0:
-            print("[" + util.format_date(time_now) + "現在]")
-            print("順番待ち情報が取得できないか、まだ診察が始まっていません。" + str(DURATION) + "秒後に再試行します。\n")
+            print(f"[{util.format_date(time_now)}現在]")
+            print(f"順番待ち情報が取得できないか、まだ診察が始まっていません。{str(DURATION)}秒後に再試行します。\n")
 
             # ページの内容を一部表示
             content = soup.find("p", class_="more-contents")
             for line in content.get_text("\n").splitlines():
-                print("> " + line)
+                print(f"> {line}")
 
             # 次のループまで待機
             time.sleep(DURATION)
         elif len(span_list) <= int(INDEX):
-            print(
-                "INDEXが不正です。設定できるのは"
-                + str(len(span_list))
-                + "までですが、"
-                + str(INDEX)
-                + "が設定されました。"
-            )
+            print(f"INDEXが不正です。設定できるのは{str(len(span_list))}までですが、{str(INDEX)}が設定されました。")
             break
 
         span_text = util.to_hankaku(span_list[INDEX].text)
         current_num = util.extract_number(span_text)
 
         # 表示
-        print("[" + util.format_date(time_now) + "現在]")
-        print("あなたの番号:", waiting_num + "番")
-        print("現在の呼出番号:", current_num + "番")
+        print(f"[{util.format_date(time_now)}現在]")
+        print(f"あなたの番号:{waiting_num}番")
+        print(f"現在の呼出番号:{current_num}番")
         print("")
 
         if current_num.isdigit():
@@ -84,10 +78,10 @@ while 1:
                 )
                 break
             elif alert_num <= int(current_num):
-                print("!!!! " + str(ALERT_NUMBER) + "番前になりました。移動を開始してください !!!!" + "\n")
+                print(f"!!!! {str(ALERT_NUMBER)}番前になりました。移動を開始してください !!!!" + "\n")
                 notification.notify(
                     title="ネコの目通知",
-                    message=str(ALERT_NUMBER) + "番前になりました。移動を開始してください。",
+                    message=f"{str(ALERT_NUMBER)}番前になりました。移動を開始してください。",
                     timeout=5,
                 )
 
