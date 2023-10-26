@@ -1,0 +1,14 @@
+[Settings]
+; 順番待ち情報を取得するURLを指定する
+TARGET_URL = "https://www.neconome.com/XXXXXX"
+
+; 何番目のspanを取得するか指定する。
+; 施設によって文言が違うため、適宜調整する。
+; zero-based index
+SPAN_INDEX = 1
+
+; 何番前になったら通知するか設定する
+ALERT_NUMBER = 6
+
+; 何秒おきに確認するか設定する
+DURATION = 180
