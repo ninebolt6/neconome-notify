@@ -16,7 +16,9 @@ build-backend = "hatchling.build"
 
 [tool.rye]
 managed = true
-dev-dependencies = []
+dev-dependencies = [
+    "pytest>=7.4.3",
+]
 
 [tool.rye.scripts]
 notify = "python src/neconome-notify.py"
